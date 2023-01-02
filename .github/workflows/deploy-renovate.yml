@@ -27,7 +27,7 @@ jobs:
           echo "blaat" > blaat
           git add blaat
           git commit -a -m 'blaat'
-          git push https://$GITHUB_TOKEN@github.com/sebtestorg2/renovate-clean.git $BRANCH
+          git push https://$CUSTOM_TOKEN@github.com/sebtestorg2/renovate-clean.git $BRANCH
           gh pr create -R sebtestorg2/renovate-clean --title "The bug is fixed" --body "Everything works again" --base main --head $BRANCH
         env:
-          GITHUB_TOKEN: '${{ steps.get_token.outputs.token }}'
+          CUSTOM_TOKEN: '${{ steps.get_token.outputs.token }}'
