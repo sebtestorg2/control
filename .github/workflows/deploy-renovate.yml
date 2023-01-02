@@ -15,19 +15,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
         with:
+          path: main
+      - name: Checkout deploy repo
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+        with:
           repository: sebtestorg2/renovate-clean
           token: '${{ steps.get_token.outputs.token }}'
+          path: deploy-repo
       - name: Create branch, commit and push
         id: branch
         run: |
           BRANCH="githubaction-test-$(date +%Y-%m-%d-%H-%M-%S)"
           git config --global user.email "118825710+renovate-action[bot]@users.noreply.github.com"
           git config --global user.name "renovate-action[bot]"
+          cd deploy-repo
           git checkout -b "$BRANCH"
-          echo "blaat" > blaat
+          cp ../main/files/blaat blaat
           git add blaat
+          if [ -f .github/dependabot.yaml ]; thebn
+            git rm .github/dependabot.yaml
+          fi
           git commit -a -m 'blaat'
           git push origin $BRANCH
-          gh pr create -R sebtestorg2/renovate-clean --title "The bug is fixed" --body "Everything works again" --base main --head $BRANCH
+          gh pr create -R sebtestorg2/renovate-clean --title "Adding blaat" --body ":smile:" --base main --head $BRANCH
         env:
           GITHUB_TOKEN: '${{ steps.get_token.outputs.token }}'
