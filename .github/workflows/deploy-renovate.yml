@@ -1,3 +1,4 @@
+name: Deploy Renovate
 on:
   workflow_dispatch:
 
@@ -32,7 +33,7 @@ jobs:
           git checkout -b "$BRANCH"
           cp ../main/files/blaat blaat
           git add blaat
-          if [ -f .github/dependabot.yaml ]; thebn
+          if [ -f .github/dependabot.yaml ]; then
             git rm .github/dependabot.yaml
           fi
           git commit -a -m 'blaat'
