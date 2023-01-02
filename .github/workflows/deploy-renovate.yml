@@ -35,9 +35,13 @@ jobs:
           git config --global user.email "118825710+renovate-action[bot]@users.noreply.github.com"
           git config --global user.name "renovate-action[bot]"
           cd deploy-repo
+          DEFAULT_BRANCH=$(git remote show origin | awk '/HEAD branch/ {print $NF}')
           git checkout -b "$BRANCH"
-          cp ../main/files/blaat blaat
-          git add blaat
+          TEMP_CONFIG=$(mktemp)
+          jq --arg default_branch "$DEFAULT_BRANCH" '.baseBranches = [$default_branch]' ../main/files/blaat > $TEMP_CONFIG
+          mkdir files
+          mv $TEMP_CONFIG files/blaat 
+          git add files/blaat
           if [ -f .github/dependabot.yaml ]; then
             git rm .github/dependabot.yaml
           fi
