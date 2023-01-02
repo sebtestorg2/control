@@ -1,7 +1,12 @@
 name: Deploy Renovate
 on:
   workflow_dispatch:
-
+    inputs:
+      deployRepository:
+        description: "The repository to deploy Renovate to"
+        required: true
+        default: "sebtestorg2/"
+        type: string
 jobs:
   renovate:
     runs-on: ubuntu-latest
@@ -20,7 +25,7 @@ jobs:
       - name: Checkout deploy repo
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
         with:
-          repository: sebtestorg2/renovate-clean
+          repository: '${{ github.event.inputs.deployRepository }}'
           token: '${{ steps.get_token.outputs.token }}'
           path: deploy-repo
       - name: Create branch, commit and push
@@ -38,6 +43,7 @@ jobs:
           fi
           git commit -a -m 'blaat'
           git push origin $BRANCH
-          gh pr create -R sebtestorg2/renovate-clean --title "Adding blaat" --body ":smile:" --base main --head $BRANCH
+          gh pr create -R $DEPLOY_REPOSITORY --title "Adding blaat" --body ":smile:" --base main --head $BRANCH
         env:
+          DEPLOY_REPOSITORY: '${{ github.event.inputs.deployRepository }}'
           GITHUB_TOKEN: '${{ steps.get_token.outputs.token }}'
