@@ -21,7 +21,6 @@ jobs:
         id: branch
         run: |
           BRANCH="githubaction-test-$(date +%Y-%m-%d-%H-%M-%S)"
-          echo "::set-output name=branch::$BRANCH"
           git config --global user.email "118825710+renovate-action[bot]@users.noreply.github.com"
           git config --global user.name "renovate-action[bot]"
           git checkout -b "$BRANCH"
@@ -29,4 +28,6 @@ jobs:
           git add blaat
           git commit -a -m 'blaat'
           git push origin $BRANCH
-          #gh pr create -R sebtestorg2/renovate-clean --title "The bug is fixed" --body "Everything works again" --base main --head $BRANCH
+          gh pr create -R sebtestorg2/renovate-clean --title "The bug is fixed" --body "Everything works again" --base main --head $BRANCH
+        env:
+          GITHUB_TOKEN: '${{ steps.get_token.outputs.token }}'
