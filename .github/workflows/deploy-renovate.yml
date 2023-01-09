@@ -47,7 +47,7 @@ jobs:
           fi
           git commit -a -m 'blaat'
           git push origin $BRANCH
-          gh pr create -R $DEPLOY_REPOSITORY --title "Adding blaat" --body ":smile:, initiated by @$GITHUB_ACTOR" --base main --head $BRANCH
+          gh pr create -R $DEPLOY_REPOSITORY --title "Adding blaat" --body ":smile:, initiated by @$GITHUB_ACTOR" --base $DEFAULT_BRANCH --head $BRANCH
         env:
           DEPLOY_REPOSITORY: '${{ github.event.inputs.deployRepository }}'
           GITHUB_TOKEN: '${{ steps.get_token.outputs.token }}'
