@@ -42,9 +42,12 @@ jobs:
           mkdir files
           mv $TEMP_CONFIG files/blaat 
           git add files/blaat
-          if [ -f .github/dependabot.yaml ]; then
-            git rm .github/dependabot.yaml
-          fi
+          FILES_TO_REMOVE=".github/dependabot.yaml .github/dependabot.yml"
+          for FILE_TO_REMOVE in $FILES_TO_REMOVE; do
+            if [ -f "${FILE_TO_REMOVE}" ]; then
+              git rm "${FILE_TO_REMOVE}"
+            fi
+          done
           git commit -a -m 'blaat'
           git push origin $BRANCH
           gh pr create -R $DEPLOY_REPOSITORY --title "Adding blaat" --body ":smile:, initiated by @$GITHUB_ACTOR" --base $DEFAULT_BRANCH --head $BRANCH
