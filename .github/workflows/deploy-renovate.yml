@@ -48,8 +48,8 @@ jobs:
           git commit -a -m 'blaat'
           git push origin $BRANCH
           gh pr create -R $DEPLOY_REPOSITORY --title "Adding blaat" --body ":smile:, initiated by @$GITHUB_ACTOR" --base $DEFAULT_BRANCH --head $BRANCH
-          BODY="Blablabla; \
-          \`ab\` -> \`cd\` -> \
+          BODY="Blablabla;
+          \`ab\` -> \`cd\` ->
           \`ef\` g ->
           \`hi\` -> Add \`j-k\` -> \`lm\`"                                                                                                                                                                                                                  
           gh issue create --title "Onboarding Renovate for repository ${DEPLOY_REPOSITORY}" --body "${BODY}" --repo sebtestorg2/control
