@@ -1,5 +1,3 @@
 {
-  "seb": true,
-  "baseBranches": ["blaat"],
-  "kaas": "nice"
+  "baseBranches": ["blaat"]
 }
